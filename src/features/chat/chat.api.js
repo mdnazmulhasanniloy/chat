@@ -4,7 +4,7 @@ import apiSlice from "../Api/apiSlice";
 
 const chatApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    sendChat: builder.mutation({
+    createChat: builder.mutation({
       query: (data) => ({
         url: "/chats",
         method: "POST",
@@ -12,16 +12,9 @@ const chatApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["chat"],
     }),
-    getChat: builder.query({
+    getMyChat: builder.query({
       query: (props) => ({
-        url: `/chats?${props && props}`,
-        method: "GET",
-      }),
-      providesTags: ["chat"],
-    }),
-    myMessages: builder.query({
-      query: ({ senderId, receiverId }) => ({
-        url: `/chats/myMessages?senderId=${senderId}&receiverId=${receiverId}`,
+        url: `/chats/myChat/${props}`,
         method: "GET",
       }),
       providesTags: ["chat"],
@@ -29,5 +22,4 @@ const chatApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetChatQuery, useSendChatMutation, useMyMessagesQuery } =
-  chatApi;
+export const { useGetMyChatQuery, useCreateChatMutation } = chatApi;
